@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "expshop", // expshop://
+    "scheme": "expshop",
     "name": "game-topup-shop",
     "slug": "game-topup-shop",
     "version": "1.0.0",
@@ -28,7 +28,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "@react-native-vector-icons/material-icons"
     ]
   }
 }

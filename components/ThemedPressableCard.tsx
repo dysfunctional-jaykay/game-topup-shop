@@ -9,13 +9,13 @@ import {
     Pressable, 
     PressableProps,
     StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Colors } from '../constants/Colors'
 
 type cardProps = {
     cardTitle: string,
     linkTo?: string,
-    cardIconPath: string | number, // Accepts require('./img.png') OR 'https://...' OR 'file://...'
+    cardIconPath?: string | number, // Accepts require('./img.png') OR 'https://...' OR 'file://...'
     style?: StyleProp<ImageStyle>,
     resizeMode?: 'cover' | 'contain' | 'stretch' | 'repeat' | 'center';
     onPress?: () => void,
@@ -32,6 +32,7 @@ const ThemedPressableCard = ({
 }: cardProps & PressableProps) => {
     const colorScheme = useColorScheme() ?? 'light'
     const theme = Colors[colorScheme]
+    const [hasError, setHasError] = useState(false)
 
     const resolveSource = (): ImageSourcePropType => {
         if (typeof cardIconPath === 'number') {
@@ -53,8 +54,9 @@ const ThemedPressableCard = ({
           ]}
           {...props}
         >
-          <Image 
-            source={resolveSource()} 
+          <Image
+            onError={(e) => setHasError(true)}
+            source={hasError ? require('../assets/no-image-icon.jpg') : resolveSource()} 
             style={[styles.iconImg, style]}
             resizeMode={resizeMode}
           />

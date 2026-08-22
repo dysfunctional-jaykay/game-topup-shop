@@ -1,19 +1,31 @@
-import { StyleSheet, Text, View, Image, ImageSourcePropType, ImageStyle, StyleProp, Pressable } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Link } from 'expo-router'
 import React from 'react'
 import ThemedView from '../../components/ThemedView'
 import ThemedPressableCard from '../../components/ThemedPressableCard'
+import ThemedText from '../../components/ThemedText'
 
 const index = () => {
   return (
-    <ThemedView>
-      <ThemedPressableCard cardTitle='Reverse: 1999' cardIconPath={require('../../assets/game-icons/r1999-icon.png')} />
-      <ThemedPressableCard cardTitle='Reverse: 1999' cardIconPath={require('../../assets/game-icons/r1999-icon.png')} />
-      <Text style={styles.title}>Time to cram</Text>
-      <Text style={{marginTop: 20, marginBottom: 20}}>Goodbye to sleep</Text>
-      
-      <Link href="/login" style={styles.link}>Login Page</Link>
-      <Link href="dashboard/about" style={styles.link}>About Page</Link>
+    <ThemedView style={styles.container}>
+      <View style={styles.container}>
+        <ThemedText></ThemedText>
+        <Link href="/login" style={styles.link}>
+          <ThemedText>
+            Login Page
+          </ThemedText>
+        </Link>
+        <Link href="/register" style={styles.link}>
+          <ThemedText>
+            Register Page
+          </ThemedText>
+        </Link>
+        <Link href="/profile" style={styles.link}>
+          <ThemedText>
+            Profile Page
+          </ThemedText>
+        </Link>
+      </View>
     </ThemedView>
   )
 }
@@ -21,6 +33,13 @@ const index = () => {
 export default index
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   title: {
     fontWeight: 'bold',
     fontSize: 20,
