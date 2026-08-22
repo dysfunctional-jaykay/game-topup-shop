@@ -11,11 +11,12 @@ import Spacer from '../../../components/Spacer'
 import ThemedText from '../../../components/ThemedText'
 import ThemedTextInput from '../../../components/ThemedTextInput'
 
-const register = () => {
+const Register = () => {
   const colorScheme = useColorScheme() ?? 'light'
   const theme = Colors[colorScheme]
 
   const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError ] = useState<string | null>(null)
 
@@ -25,7 +26,7 @@ const register = () => {
     setError(null)
 
     try {
-      await register(username, password)
+      await register(username, email, password)
     } catch (error){
       if(error instanceof Error){
         setError(error.message)
@@ -48,8 +49,18 @@ const register = () => {
           style={{width: '80%', marginBottom: 10}} 
           placeholder='Username' 
           placeholderTextColor={theme.text}
+          keyboardType='email-address'
           onChangeText={setUsername}
           value={username}
+        />
+
+        <ThemedTextInput 
+          style={{width: '80%', marginBottom: 10}} 
+          placeholder='Email' 
+          placeholderTextColor={theme.text}
+          keyboardType='email-address'
+          onChangeText={setEmail}
+          value={email}
         />
 
         <ThemedTextInput 
@@ -80,7 +91,7 @@ const register = () => {
   )
 }
 
-export default register
+export default Register
 
 const styles = StyleSheet.create({
   container: {

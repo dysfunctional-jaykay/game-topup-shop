@@ -11,7 +11,7 @@ import ThemedText from '../../../components/ThemedText'
 import ThemedButton from '../../../components/ThemedButton'
 import ThemedTextInput from '../../../components/ThemedTextInput'
 
-const login = () => {
+const Login = () => {
   const colorScheme = useColorScheme() ?? 'light'
   const theme = Colors[colorScheme]
 
@@ -83,7 +83,7 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
 
 const styles = StyleSheet.create({
   container: {

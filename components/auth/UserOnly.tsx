@@ -1,4 +1,3 @@
-import { Text } from 'react-native'
 import { useRouter } from "expo-router"
 import { useUser } from "../../hooks/useUser"
 import { ReactNode, useEffect } from "react"
@@ -14,9 +13,9 @@ const UserOnly = ({ children }: UserOnlyProps) => {
 
     useEffect(() => {
         if(authChecked && user === null) {
-            router.replace('/login')
+            router.replace('/topup')
         }
-    }), [user, authChecked]
+    }, [user, authChecked])
 
     if(!authChecked || !user){
         return (

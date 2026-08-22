@@ -12,7 +12,7 @@ const ThemedView = ({ style, safe = false, ...props }: ViewProps & safeProps) =>
   const theme = Colors[colorScheme]
 
   if(!safe) return (
-    <View style={[styles.container, style, {backgroundColor: theme.background} ]}
+    <View style={[style, {backgroundColor: theme.background} ]}
     {...props} />
   )
 
@@ -20,7 +20,6 @@ const ThemedView = ({ style, safe = false, ...props }: ViewProps & safeProps) =>
 
   return (
     <View style={[
-      styles.container,
       {
         backgroundColor: theme.background,
         paddingTop: insets.top,
@@ -33,12 +32,6 @@ const ThemedView = ({ style, safe = false, ...props }: ViewProps & safeProps) =>
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 7,
-    gap: 10,
-  },
 })
 
 export default ThemedView
