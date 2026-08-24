@@ -70,13 +70,19 @@ const Login = () => {
         {error && <Text style={styles.error}>{error}</Text>}
 
         <Spacer height={100} />
+        <ThemedText>
+          Don't have an account?
+        </ThemedText>
         <Link href={'/register'}>
-          <ThemedText style={{textAlign: 'center'}}>
-            Register
+          <ThemedText style={[styles.link, {textDecorationLine: 'underline'}]}>
+            Register Now
           </ThemedText>
         </Link>
+        <Spacer />
         <Link href={'/'}>
-          Back
+          <ThemedText style={{fontSize: 20}}>
+            Back
+          </ThemedText>
         </Link> 
       </ThemedView>
     </TouchableWithoutFeedback>
@@ -105,5 +111,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 6,
     marginHorizontal: 10,
+  },
+  link: {
+    color: Colors.primary,
   },
 })

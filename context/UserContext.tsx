@@ -2,7 +2,6 @@ import { createContext, useState, useEffect, type ReactNode } from 'react'
 import { account } from '../lib/appwrite'
 import { ID, Models } from 'react-native-appwrite'
 import { databases } from '../lib/appwrite'
-import { Query } from 'react-native-appwrite'
 
 const DATABASE_ID = '6a890bae0008bc68146a'
 const TABLE_ID = 'accounts'
@@ -19,6 +18,8 @@ type UserContextType = {
     register: (username:string, email: string, password: string) => Promise<void>
     logout: () => Promise<void>
     fetchUserInformation: (id: string) => Promise<User | undefined>
+    addCredit: (id: string, credit: number) => Promise<User | undefined>
+    subtractCredit: (id: string, credit: number) => Promise<User | undefined>
     authChecked: boolean
 }
 
@@ -34,6 +35,10 @@ export const UserContext = createContext<UserContextType>({
     logout: async () => {},
 
     fetchUserInformation: async () => undefined,
+
+    addCredit: async () => undefined,
+    
+    subtractCredit: async () => undefined,
 
     authChecked: false,
 })
@@ -104,7 +109,11 @@ export function UserProvider({ children }: UserProviderProps) {
 
             console.log('Logout successful')
         } catch (error) {
-            console.log('Logout failed:', error)
+            if(error instanceof Error){
+                throw Error(error.message)
+            } else {
+                throw Error('An unexpected error occured')
+            }
         }
     }
 
@@ -127,19 +136,44 @@ export function UserProvider({ children }: UserProviderProps) {
         }
     }
 
-    async function updateUserInformation(id: string, newUsername: string) {
+    // For editing username and profile picture
+    // async function updateUserInformation(id: string, newUsername: string) {
+    //     try {
+    //         const response = await databases.updateRow({
+    //             databaseId: DATABASE_ID,
+    //             tableId: TABLE_ID,
+    //             rowId: id,
+    //             data: {
+    //                 username: newUsername,
+    //             }
+    //         })
+
+    //         return response as unknown as User
+
+    //     } catch(error) {
+    //         if (error instanceof Error) {
+    //             throw Error(error.message)
+    //         } else {
+    //             throw Error('An unexpected error occured')
+    //         }
+    //     }
+    // }
+
+    async function addCredit(id: string, credit: number) {
         try {
-            const response = await databases.updateRow({
+            const response = await databases.incrementRowColumn({
                 databaseId: DATABASE_ID,
                 tableId: TABLE_ID,
                 rowId: id,
-                data: {
-                    username: newUsername,
-                }
+                column: 'credits',
+                value: credit,
             })
 
-            return response as unknown as User
+            const updatedUser = response as unknown as User
 
+            setUserInfo(updatedUser)
+
+            return updatedUser
         } catch(error) {
             if (error instanceof Error) {
                 throw Error(error.message)
@@ -149,19 +183,31 @@ export function UserProvider({ children }: UserProviderProps) {
         }
     }
 
-    async function updateCredit(id: string, credit: number) {
+    async function subtractCredit(id: string, credit: number) {
         try {
-            const response = await databases.updateRow({
+            const userCurrentCredit = userInfo?.credits
+
+            if (userCurrentCredit === undefined) {
+                return
+            }
+
+            if(userCurrentCredit < credit){
+                return
+            }
+
+            const response = await databases.decrementRowColumn({
                 databaseId: DATABASE_ID,
                 tableId: TABLE_ID,
                 rowId: id,
-                data: {
-                    credits: +credit,
-                }
+                column: 'credits',
+                value: credit,
             })
 
-            return response as unknown as User
+            const updatedUser = response as unknown as User
 
+            setUserInfo(updatedUser)
+
+            return updatedUser
         } catch(error) {
             if (error instanceof Error) {
                 throw Error(error.message)
@@ -210,6 +256,8 @@ export function UserProvider({ children }: UserProviderProps) {
                 register,
                 logout,
                 fetchUserInformation,
+                addCredit,
+                subtractCredit,
                 authChecked,
             }}
         >

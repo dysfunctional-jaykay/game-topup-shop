@@ -25,6 +25,18 @@ const Register = () => {
   const handleSubmit = async () => {
     setError(null)
 
+    if(!username){
+      setError('Please input a username!')
+    } else if (username.length <= 8){
+      setError('Username must at least contain 8 characters or more!')
+    } else if (!/\S+@\S+\.\S+/.test(username)){
+      setError('Username cannot contain certain special characters (!,@,.,/)')
+    } 
+
+    if(error !== null){
+      return
+    }
+
     try {
       await register(username, email, password)
     } catch (error){
@@ -81,11 +93,16 @@ const Register = () => {
         {error && <Text style={styles.error}>{error}</Text>}
 
         <Spacer height={20} />
-        <Link href={'/login'}>
-          <ThemedText style={{textAlign: 'center'}}>
-            Already have an account? Login now
+        <ThemedView style={{flexDirection: 'row', gap: 2}}>
+          <ThemedText>
+            Already have an account?
           </ThemedText>
-        </Link>
+          <Link href={'/login'}>
+            <ThemedText style={[styles.link, {textDecorationLine: 'underline'}]}>
+              Login now
+            </ThemedText>
+          </Link>
+        </ThemedView>
       </ThemedView>
     </TouchableWithoutFeedback>
   )
@@ -113,5 +130,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 6,
     marginHorizontal: 10,
+  },
+  link: {
+    color: Colors.primary,
   },
 })

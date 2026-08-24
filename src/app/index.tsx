@@ -1,14 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { Link } from 'expo-router'
+import { Link, Redirect } from 'expo-router'
 import React from 'react'
 import ThemedView from '../../components/ThemedView'
-import ThemedPressableCard from '../../components/ThemedPressableCard'
 import ThemedText from '../../components/ThemedText'
+import ThemedLoader from '../../components/ThemedLoader'
+
 
 const index = () => {
   return (
+    
+
     <ThemedView style={styles.container}>
-      <View style={styles.container}>
+      <Redirect href='/topup' />
+
+      <ThemedLoader />
+
+      {/* <View style={styles.container}>
         <ThemedText></ThemedText>
         <Link href="/login" style={styles.link}>
           <ThemedText>
@@ -25,7 +32,7 @@ const index = () => {
             Profile Page
           </ThemedText>
         </Link>
-      </View>
+      </View> */}
     </ThemedView>
   )
 }
@@ -37,8 +44,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: "row",
-    flexWrap: "wrap",
   },
   title: {
     fontWeight: 'bold',

@@ -19,15 +19,16 @@ const PurchaseScreen = () => {
     useEffect(() => {
         async function loadProduct() {
             const productData = await fetchProductById(id)
-            console.log(productData)
+            // console.log(productData)
             setProduct(productData)
         }
         loadProduct()
     }, [id])
 
+    // Probably make this a modal instead... maybe
     return (
-        <ThemedView safe={true}>
-            <ThemedText>Products of {product?.name ?? 'Loading...'}</ThemedText>
+        <ThemedView style={{flex: 1}} safe={true}>
+            <ThemedText>Purchase {product?.name ?? 'Loading...'}</ThemedText>
         </ThemedView>
     )
 }

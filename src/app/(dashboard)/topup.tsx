@@ -25,7 +25,7 @@ const Topup = () => {
       </ThemedTopBar>
       <ThemedView style={styles.cardContainer}>
         <ThemedPressableCard onPress={() => router.push('/view_products/r1999')} cardTitle='Reverse: 1999' cardIconPath={require('../../../assets/game-icons/r1999-icon.webp')} />
-        <ThemedPressableCard cardTitle='Mobile Legends: Bang Bang' cardIconPath={require('../../../assets/game-icons/mobile-legends-icon.jpg')} />
+        <ThemedPressableCard onPress={() => router.push('/view_products/mlbb')} cardTitle='Mobile Legends: Bang Bang' cardIconPath={require('../../../assets/game-icons/mobile-legends-icon.jpg')} />
       </ThemedView>
     </ThemedView>
   )

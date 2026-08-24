@@ -45,9 +45,8 @@ const DashboardLayout = () => {
                     color={focused ? theme.iconColorFocused : theme.iconColor}
                 />
             )}}/>
-            <Tabs.Screen name="products/[id]" options={{href: null}}/>
             <Tabs.Screen name="purchase/[id]" options={{href: null}}/>
-            <Tabs.Screen name="view_products/[id]" options={{href: null, headerShown: true}}/>
+            <Tabs.Screen name="view_products/[id]" options={{href: null}}/>
         </Tabs>
     ) 
 }

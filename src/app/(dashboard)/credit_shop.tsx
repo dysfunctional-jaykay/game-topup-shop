@@ -1,8 +1,7 @@
-import { StyleSheet, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import React from 'react'
 import { useRouter } from 'expo-router'
 import { useUser } from '../../../hooks/useUser'
-import { User } from '../../../context/UserContext'
 
 import ThemedView from '../../../components/ThemedView'
 import ThemedPressableCard from '../../../components/ThemedPressableCard'
@@ -12,10 +11,29 @@ import ThemedTopBar from '../../../components/ThemedTopBar'
 import ThemedText from '../../../components/ThemedText'
 
 const CreditShop = () => {
-  const { userInfo } = useUser()
-  const router = useRouter();
+  const { user, userInfo, addCredit, subtractCredit } = useUser()
+  const router = useRouter()
+  const userId = user?.$id
 
   const tokenIcon = require('../../../assets/product-img/token-box-icon.jpg')
+
+  const handleAddCredit = (amount: number) => {
+    if (!userId) {
+        router.push('/login')
+        return
+    }
+
+    addCredit(userId, amount)
+  }
+
+  const handleSubtractCredit = (amount: number) => {
+    if (!userId) {
+        router.push('/login')
+        return
+    }
+
+    subtractCredit(userId, amount)
+  }
 
   return (
     <ThemedView safe={true} style={styles.container}>
@@ -26,8 +44,10 @@ const CreditShop = () => {
         <ThemedBadge style={{}} value={userInfo?.credits ?? 0} />
       </ThemedTopBar>
       <ThemedView style={styles.cardContainer}>
-        <ThemedPressableCard onPress={() => router.push('/purchase/credit200')} cardTitle='250' cardIconPath={tokenIcon} />
-        <ThemedPressableCard cardTitle='500' cardIconPath={tokenIcon} />
+        <ThemedPressableCard onPress={() => handleAddCredit(250)} cardTitle='250 Credits' cardIconPath={tokenIcon} />
+        <ThemedPressableCard onPress={() => handleAddCredit(250)} cardTitle='500 Credits' cardIconPath={tokenIcon} />
+        <ThemedPressableCard onPress={() => handleSubtractCredit(250)} cardTitle='-250 Credits' cardIconPath={tokenIcon} />
+        <ThemedPressableCard onPress={() => handleSubtractCredit(500)} cardTitle='-500 Credits' cardIconPath={tokenIcon} />
       </ThemedView>
     </ThemedView>
   )
