@@ -29,7 +29,9 @@
     },
     "plugins": [
       "expo-router",
-      "@react-native-vector-icons/material-icons"
+      "@react-native-vector-icons/material-icons",
+      "expo-status-bar",
+      "expo-sqlite"
     ]
   }
 }

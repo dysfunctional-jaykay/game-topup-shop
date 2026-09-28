@@ -8,12 +8,10 @@ import ThemedLoader from '../../components/ThemedLoader'
 
 const index = () => {
   return (
-    
-
     <ThemedView style={styles.container}>
-      <Redirect href='/topup' />
-
       <ThemedLoader />
+
+      <Redirect href='/topup' />
 
       {/* <View style={styles.container}>
         <ThemedText></ThemedText>
